@@ -2,6 +2,7 @@ Tail-Tale
 ===========
 Game by fumi2kick, rerofumi and pyonkey-matsuo 
 TI Nspire by gameblabla
+
 Vita and restored port by dots_tb
 
 It's a puzzle game, kind of like Tetris Attack for SNES.
