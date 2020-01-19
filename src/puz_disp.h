@@ -37,7 +37,11 @@
 /* --- 表示関係の定数 */
 #define OBJMAX   186
 #define TEXMAX   5
-#define FIELDTOP 4
+#ifdef OLDHQ
+#define FIELDTOP 28
+#else
+#define FIELDTOP 4	
+#endif
 #define KIRAMAX  36
 
 

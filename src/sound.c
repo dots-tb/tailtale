@@ -144,13 +144,24 @@ void SoundInit(void)
 	#else
 		for(i=0;i<5;i++)
 		{
-			snprintf(buf, sizeof(buf), "./data/bgm00%d.ogg", i);
+			#ifdef DATA_PREFIX
+				snprintf(buf, sizeof(buf), "%sbgm00%d.ogg", DATA_PREFIX, i);
+				printf("loading: %s\n", buf);
+			#else	
+				snprintf(buf, sizeof(buf), "./data/bgm00%d.ogg", i);
+			#endif			
+			
 			snprintf(BGMPool[i], sizeof(BGMPool[i]), "%s", buf);
 		}
 		  
 		for(i=0;i<9;i++)
 		{
-			snprintf(buf, sizeof(buf), "./data/se0%d.wav", i);
+			#ifdef DATA_PREFIX
+				snprintf(buf, sizeof(buf), "%sse0%d.wav", DATA_PREFIX, i);
+				printf("loading: %s\n", buf);
+			#else	
+				snprintf(buf, sizeof(buf), "./data/se0%d.wav", i);
+			#endif	
 			SEPool[i] = Mix_LoadWAV(buf);
 		}
 	#endif

@@ -13,8 +13,13 @@
 #ifndef BOOTMAIN_H
 #define BOOTMAIN_H
 
+#ifdef OLDHQ
+#define  SCREEN_WIDTH   480
+#define  SCREEN_HEIGHT  360
+#else
 #define  SCREEN_WIDTH   320
 #define  SCREEN_HEIGHT  240
+#endif
 
 #if defined(__GP2X__) || defined(DREAMCAST) || defined(SYLLABLE)
 	#define  SCREEN_DEPTH   16

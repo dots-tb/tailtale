@@ -39,7 +39,12 @@
 /* --- フィールドサイズ */
 #define FIELD_WIDTH  8
 /* Next 込み */
+
+#ifdef OLDHQ
+#define FIELD_HEIGHT  13
+#else
 #define FIELD_HEIGHT  10
+#endif
 #define ALL_BLOCK  (FIELD_WIDTH * FIELD_HEIGHT)
 
 /* --- 何個で消えるか */

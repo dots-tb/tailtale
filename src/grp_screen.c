@@ -64,7 +64,12 @@ TGameScreen *TGameScreen_Create(int width, int height, int depth)
 #ifdef SYLLABLE
 	class->Screen = SDL_SetVideoMode(width, height, depth, SDL_SWSURFACE | SDL_FULLSCREEN);
 #else
+	#ifdef VITA
+	class->Screen = SDL_SetVideoMode(width, height, depth, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	SDL_SetVideoModeScaling(120, 0, 720, 540);
+	#else
 	class->Screen = SDL_SetVideoMode(width, height, depth, SDL_SWSURFACE);
+	#endif
 #endif
 
 #endif
@@ -145,7 +150,11 @@ void TGameScreen_RefreshScreen(TGameScreen *class)
 	SDL_Flip(real_screen);
 	SDL_FreeSurface(doble);
 #else
-	SDL_UpdateRect(class->Screen, 0, 0, class->Width, class->Height);
+	#ifdef VITA
+		SDL_Flip(class->Screen);
+	#else
+		SDL_UpdateRect(class->Screen, 0, 0, class->Width, class->Height);
+	#endif
 #endif
 	//SDL_FillRect(class->Screen, 0, 0xff000040);
 }
@@ -203,7 +212,12 @@ void Render(TGameScreen *class, TGameSprite *spr)
       SDL_SetAlpha(spr->Texture, SDL_SRCALPHA, spr->alpha);
     }
     else {
-      SDL_SetAlpha(spr->Texture, 0, 0);
+	#ifdef OLDHQ
+	SDL_SetAlpha(spr->Texture, SDL_SRCALPHA, 0);
+	#else
+	SDL_SetAlpha(spr->Texture, 0, 0);
+	#endif
+     
     }
   }
   r = SDL_BlitSurface(spr->Texture, &rect1, class->Screen, &rect2);

@@ -24,7 +24,7 @@
  All Rights Reserved.
  ------------------------------------------------------*/
 
-/* --- ¥²¡¼¥à¤ÎÆñ°×ÅÙÀßÄê */
+/* --- ¥²¡¼¥à¤ÎÆñ°×ÅÙÀßÄE*/
 enum {
   LevelEasy = 0,
   LevelNormal,
@@ -355,7 +355,24 @@ void TPuzzleBase_GameLevel(TPuzzleBase *class, int lset)
     l = 29;
   }
   /* •Ï‰»‚·‚é‚Ì‚Í‚±‚Ì“ñ‚Â */
+  printf("level %x\n", class->Difficult);
   switch(class->Difficult) {
+#ifdef OLDHQ
+  case LevelEasy:
+    class->ColorNum = LevelColor_normal[l];
+    class->NextInterval = LevelSpeed_normal[l] * 2;
+    break;
+
+  case LevelNormal:
+    class->ColorNum = LevelColor_hard[l];
+    class->NextInterval = LevelSpeed_hard[l] * 2;
+    break;
+
+  case LevelHard:
+    class->ColorNum = LevelColor_veryhard[l];
+    class->NextInterval = LevelSpeed_veryhard[l] * 2;
+    break;
+#else
   case LevelEasy:
     class->ColorNum = LevelColor_easy[l];
     class->NextInterval = LevelSpeed_easy[l] * 2;
@@ -370,6 +387,7 @@ void TPuzzleBase_GameLevel(TPuzzleBase *class, int lset)
     class->ColorNum = LevelColor_hard[l];
     class->NextInterval = LevelSpeed_hard[l] * 2;
     break;
+#endif
   }
 }
   

@@ -135,7 +135,9 @@ void TGameTexture_Load(TGameTexture *class, int num, char *filename, SDL_Surface
 			snprintf(buf, sizeof(buf), "./data/%s", filename);
 		#endif
 	#endif
-	
+	#ifdef DATA_PREFIX
+		snprintf(buf, sizeof(buf), "%s%s", DATA_PREFIX, filename);
+	#endif
 	filename = buf;
 #endif
 
@@ -193,18 +195,25 @@ void TGameTexture_Load(TGameTexture *class, int num, char *filename, SDL_Surface
 		else if (strcmp(filename,"trial_parts_320.bmp")==0)
 			tmp = SDL_LoadBMP("./data/trial_parts_320.bmp");
 	#else
+		#ifdef OLDHQ
+	    tmp = IMG_Load(filename);
+	    #else
 		tmp = SDL_LoadBMP(filename);
+	    #endif
 	#endif
 #endif
-	
+	#ifdef OLDHQ
+	plane = SDL_DisplayFormatAlpha(tmp);
+	#else
 	plane = SDL_DisplayFormat(tmp);
+	#endif
 	SDL_FreeSurface(tmp);
   
 	if (plane == NULL) {
 		class->bitmap[num] = NULL;
 		return;
 	}
-  
+
 
 #if (SCREEN_DEPTH != 16)
 		if (preconv == TRUE) 
@@ -220,7 +229,7 @@ void TGameTexture_Load(TGameTexture *class, int num, char *filename, SDL_Surface
 			class->bitmap[num] = plane;
 		}
 #else
-			class->bitmap[num] = plane;
+		class->bitmap[num] = plane;
 			nonalign = class->bitmap[num]->pixels;
 			msize = (class->bitmap[num]->w * class->bitmap[num]->h) * class->bitmap[num]->format->BytesPerPixel;
 			
@@ -255,7 +264,7 @@ void TGameTexture_Load(TGameTexture *class, int num, char *filename, SDL_Surface
 				memcpy(class->bitmap[num]->pixels, nonalign, msize);
 			}
 		  
-		  free(nonalign);
+		  free(nonalign);*/
 #endif
 
 }

@@ -9,7 +9,7 @@
 /*                        1st Maintaner  Rerorero@fumi.   */
 /*                                                        */
 /*   input.c                                              */
-/*     ╞■╬╧е▐е═б╝е╕еу                                     */
+/*     ╞■╬╧е▐е═б╝е╕еБE                                    */
 /*                                                        */
 /*--------------------------------------------------------*/
 /* -- $Id:  $ */
@@ -17,8 +17,7 @@
 
 /*------------------------------------------------------------- */
 /** @file
-    @brief		╞■╬╧е▐е═б╝е╕еу
-    @author		K.Kunikane (rerofumi)
+    @brief		╞■╬╧е▐е═б╝е╕еБE    @author		K.Kunikane (rerofumi)
     @since		Jul.27.2005
     $Revision: 1.1.1.1 $
 */
@@ -353,7 +352,7 @@ void  joy_read_button_up_psp(SDL_JoyButtonEvent *btn)
     /* вд */
     if ((btn->button == 0) && (btn->state == SDL_RELEASED))
       JoyKey[btn->which] = JoyKey[btn->which] & (~(IN_Button3));
-    /* б√ */
+    /* бБE*/
     if ((btn->button == 1) && (btn->state == SDL_RELEASED))
       JoyKey[btn->which] = JoyKey[btn->which] & (~(IN_Button1));
     /* б▀ */
@@ -380,6 +379,12 @@ void  joy_read_button_up_psp(SDL_JoyButtonEvent *btn)
     /* вк */
     if ((btn->button == 9) && (btn->state == SDL_RELEASED))
       JoyKey[btn->which] = JoyKey[btn->which] & (~(IN_Right));
+  
+    /*if ((btn->button == 11) && (btn->state == SDL_RELEASED))
+      JoyKey[btn->which] = JoyKey[btn->which] & (~(IN_Button7));
+  
+    if ((btn->button == 10) && (btn->state == SDL_RELEASED))
+      JoyKey[btn->which] = JoyKey[btn->which] & (~(IN_Button8));*/
   }
 }
 
@@ -500,7 +505,7 @@ void  joy_read_button_down_psp(SDL_JoyButtonEvent *btn)
     /* вд */
     if ((btn->button == 0) && (btn->state == SDL_PRESSED))
       JoyKey[btn->which] = JoyKey[btn->which] | IN_Button3;
-    /* б√ */
+    /* бБE*/
     if ((btn->button == 1) && (btn->state == SDL_PRESSED))
       JoyKey[btn->which] = JoyKey[btn->which] | IN_Button1;
     /* б▀ */
@@ -527,12 +532,19 @@ void  joy_read_button_down_psp(SDL_JoyButtonEvent *btn)
     /* вк */
     if ((btn->button == 9) && (btn->state == SDL_PRESSED))
       JoyKey[btn->which] = JoyKey[btn->which] | IN_Right;
+  
+    /*if ((btn->button == 11) && (btn->state == SDL_PRESSED))
+      JoyKey[btn->which] = JoyKey[btn->which] | IN_Button7;
+  
+    if ((btn->button == 10) && (btn->state == SDL_PRESSED))
+      JoyKey[btn->which] = JoyKey[btn->which] | IN_Button8; */
+ 
   }
 }
 
 
 /* ---------------------------------------- */
-/* --- ╞■╬╧┴ї├╓д╬╜щ┤№└▀─ъ                   */
+/* --- ╞■╬╧┴ї├╓д╬╜щ┤БE▀─БE                  */
 /* ---------------------------------------- */
 void  InputInit(void)
 {
@@ -560,7 +572,7 @@ void  InputInit(void)
   for(i=0; i<(JoyNum + 1); i++) {
     JoyPtr[i] = SDL_JoystickOpen(i);
     if (JoyPtr[i] != NULL) {
-      /* --- е╕ечеде╣е╞еге├епд╬╝я╬рдЄе┴езе├еп */
+      /* --- е╕ечеде╣е╞еге├епд╬╝БEрдЄе┴езе├еп */
       JoyStickAxes[i] = SDL_JoystickNumAxes(JoyPtr[i]);
       JoyStickButtons[i] = SDL_JoystickNumButtons(JoyPtr[i]);
     }
@@ -570,14 +582,14 @@ void  InputInit(void)
 
 
 /* ---------------------------------------- */
-/* --- ╞■╬╧┴ї├╓д╬▓Є╩№                       */
+/* --- ╞■╬╧┴ї├╓д╬▓Є╩БE                      */
 /* ---------------------------------------- */
 void  InputFree(void)
 {
 #ifdef SDL_JOYSTICK
   unsigned char i;
 
-  /* ----- е╕ечеде╣е╞еге├епд╬▓Є╩№ */
+  /* ----- е╕ечеде╣е╞еге├епд╬▓Є╩БE*/
   for(i=0; i<JOY_NUM_MAX; i++) {
     if (JoyPtr[i] != 0) {
       SDL_JoystickClose(JoyPtr[i]);
@@ -708,7 +720,7 @@ void controls_dreamcast(void)
 #endif
 
 /* ---------------------------------------- */
-/* --- енб╝д╬─ъ┤№┼к╞╔д▀д╚дъ                 */
+/* --- енб╝д╬─БEБEк╞╔д▀д╚дБE                */
 /* ---------------------------------------- */
 void  InputPoll(void)
 {
@@ -751,7 +763,11 @@ void  InputPoll(void)
 		joy_read_button_up_gp2x_rev(&event.jbutton);
       }
 #else
+	#ifdef VITA
+      joy_read_button_up_psp(&event.jbutton);
+	#else
       joy_read_button_up_pc(&event.jbutton);
+	#endif
 #endif
 #else
       joy_read_button_up_psp(&event.jbutton);
@@ -768,7 +784,11 @@ void  InputPoll(void)
 	joy_read_button_down_gp2x_rev(&event.jbutton);
       }
 #else
+	#ifdef VITA
+      joy_read_button_down_psp(&event.jbutton);
+	#else
       joy_read_button_down_pc(&event.jbutton);
+	#endif      
 #endif
 #else
       joy_read_button_down_psp(&event.jbutton);
@@ -792,7 +812,7 @@ void  InputPoll(void)
 
 
 /* ---------------------------------------- */
-/* --- еве╫еъе▒б╝е╖ечеє╜к╬╗енб╝д╬╚╜╩╠       */
+/* --- еве╫еБE▒б╝е╖ечеє╜к╬╗енб╝д╬╚╜╩╠       */
 /* ---------------------------------------- */
 int  InputExit(void)
 {
@@ -801,7 +821,7 @@ int  InputExit(void)
 
 
 /* ---------------------------------------- */
-/* --- ецб╝е╢б╝╞■╬╧д╬╞╔д▀д╚дъ               */
+/* --- ецб╝е╢б╝╞■╬╧д╬╞╔д▀д╚дБE              */
 /* ---------------------------------------- */
 int InputJoyKey(int side)
 {
@@ -819,7 +839,7 @@ int InputJoyKey(int side)
 
 
 /* ---------------------------------------- */
-/* --- ецб╝е╢б╝╞■╬╧д╬е╚еъемб╝╞╔д▀д╚дъ       */
+/* --- ецб╝е╢б╝╞■╬╧д╬е╚еБEмб╝╞╔д▀д╚дБE      */
 /* ---------------------------------------- */
 int  InputJoyKeyTriger(int side)
 {
@@ -836,7 +856,7 @@ int  InputJoyKeyTriger(int side)
 
 
 /* ----------------------------------------------- */
-/* --- GP2X ╕■д▒бве▄е┐еєд╚е╣е╞еге├еп╞■дь┬╪ди  */
+/* --- GP2X ╕■д▒бве▄е┐еєд╚е╣е╞еге├еп╞■дБE╪ди  */
 /* ----------------------------------------------- */
 void  InputJoyKeySwap(int sw)
 {
